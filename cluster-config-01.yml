@@ -1,0 +1,52 @@
+
+HeadNode:
+  InstanceType: c5a.2xlarge
+  Ssh:
+    KeyName: aws-east
+  Networking:
+    SubnetId: subnet-01a3868361b728e2c
+  LocalStorage:
+    RootVolume:
+      Size: 500
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+  Dcv:
+    Enabled: true
+
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: compute
+      ComputeResources:
+        - Name: hpc6a
+          MinCount: 0
+          MaxCount: 1000
+          InstanceType: c5n.18xlarge
+          Efa:
+            Enabled: true
+          DisableSimultaneousMultithreading: true
+      Networking:
+        SubnetIds:
+          - subnet-01a3868361b728e2c
+        PlacementGroup:
+          Enabled: true
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      CustomActions:
+        OnNodeConfigured:
+          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/was-post-01.sh
+
+Region: us-east-2
+Image:
+  Os: alinux2
+
+SharedStorage:
+  - Name: FsxLustre0
+    StorageType: FsxLustre
+    MountDir: /scratch
+    FsxLustreSettings:
+      StorageCapacity: 1200
+      DeploymentType: SCRATCH_2
