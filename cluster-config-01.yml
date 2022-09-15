@@ -37,7 +37,7 @@ Scheduling:
           - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
       CustomActions:
         OnNodeConfigured:
-          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/was-post-01.sh
+          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
 
 Region: us-east-2
 Image:
