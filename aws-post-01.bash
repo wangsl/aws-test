@@ -31,7 +31,7 @@ EOF
   if [[ "${cfn_node_type}" == "HeadNode" ]]; then
     local u=
     if [[ -d /scratch ]]; then
-      for u in wang sw77; do
+      for u in wang sw77 wd35; do
         if [[ ! -d /scratch/${u} ]]; then
           mkdir -p /scratch/${u}
           chmod 700 /scratch/${u}
