@@ -181,6 +181,16 @@ function mount_readonly_persistent_disks()
   done
 }
 
+function bind_mount_share_apps()
+{
+  if [[ "${cfn_node_type}" == "HeadNode" ]]; then
+    mkdir -p /home/apps
+    chmod 2755 /home/apps
+  fi
+  mkdir -p /share/apps
+  mount --bind /home/apps /share/apps
+}
+
 function setup_singularity()
 {
   cd /tmp && \
@@ -195,6 +205,7 @@ chmod 600 /tmp/nyu-startup.log
   set -x
 
   create_user_accounts
+  bind_mount_share_apps
 
   #mkdir -p /opt/singularity/mnt/{container,final,overlay,session}
 

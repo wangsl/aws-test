@@ -41,6 +41,28 @@ Scheduling:
       CustomActions:
         OnNodeConfigured:
           Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
+    
+    - Name: c6i32xlarge
+      ComputeResources:
+        - Name: c6i32xlarge
+          MinCount: 0
+          MaxCount: 100
+          InstanceType: c6i.32xlarge
+          Efa:
+            Enabled: true
+          DisableSimultaneousMultithreading: true
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            VolumeType: gp3
+      Networking:
+        SubnetIds:
+          - subnet-01a3868361b728e2c
+        PlacementGroup:
+          Enabled: true
+      CustomActions:
+        OnNodeConfigured:
+          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
 
     - Name: p32xlarge
       ComputeResources:
@@ -48,6 +70,7 @@ Scheduling:
           MinCount: 0
           MaxCount: 10
           InstanceType: p3.2xlarge
+          DisableSimultaneousMultithreading: true
       ComputeSettings:
         LocalStorage:
           RootVolume:
