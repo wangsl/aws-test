@@ -3,7 +3,7 @@ if [[ -e /etc/parallelcluster/cfnconfig ]]; then
   source /etc/parallelcluster/cfnconfig 
 fi
 
-function create_user_accounts_sw77_wang()
+function create_user_accounts()
 {
   local flag=
   if [[ "${cfn_node_type}" == "ComputeFleet" ]]; then
@@ -23,9 +23,23 @@ function create_user_accounts_sw77_wang()
   done <<EOF
 sw77:x:1296493:1296493:Shenglong Wang:/home/sw77:/bin/bash
 wang:x:10015:10015:Shenglong Wang:/home/wang:/bin/bash
+wd35:x:2761180:2761180:Wensheng Deng:/home/wd35:/bin/bash
 EOF
 
   unset IFS
+
+  if [[ "${cfn_node_type}" == "HeadNode" ]]; then
+    local u=
+    if [[ -d /scratch ]]; then
+      for u in wang sw77; do
+        if [[ ! -d /scratch/${u} ]]; then
+          mkdir -p /scratch/${u}
+          chmod 700 /scratch/${u}
+          chown -Rh ${u}:${u} /scratch/${u}
+        fi
+      done
+    fi
+  fi
 
   /usr/sbin/groupadd -g 891200004 gaussian
 	/usr/sbin/usermod -a -G wang,gaussian wang
@@ -167,20 +181,13 @@ function mount_readonly_persistent_disks()
   done
 }
 
-function setup_nvgrid()
-{
-  if [[ "${SLURM_JOB_PARTITION}" == "nvgrid" ]]; then
-    systemctl restart gdm 
-  fi
-}
-
 touch /tmp/nyu-startup.log
 chmod 600 /tmp/nyu-startup.log
 
 {
   set -x
 
-  create_user_accounts_sw77_wang
+  create_user_accounts
 
   #mkdir -p /opt/singularity/mnt/{container,final,overlay,session}
 
