@@ -8,6 +8,7 @@ HeadNode:
   LocalStorage:
     RootVolume:
       Size: 500
+      VolumeType: gp3
   Iam:
     AdditionalIamPolicies:
       - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
@@ -30,9 +31,20 @@ Scheduling:
           Efa:
             Enabled: true
           DisableSimultaneousMultithreading: true
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            VolumeType: gp3
       Networking:
         SubnetIds:
           - subnet-01a3868361b728e2c
+        PlacementGroup:
+          Enabled: true
+        AdditionalSecurityGroups:
+          - sg-04ec976b09177c580
+      CustomActions:
+        OnNodeConfigured:
+          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
 
     - Name: c1
       ComputeResources:
@@ -50,6 +62,13 @@ Scheduling:
       Networking:
         SubnetIds:
           - subnet-01a3868361b728e2c
+        PlacementGroup:
+          Enabled: true
+        AdditionalSecurityGroups:
+          - sg-04ec976b09177c580
+      CustomActions:
+        OnNodeConfigured:
+          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
 
     - Name: g0
       ComputeResources:
@@ -65,7 +84,10 @@ Scheduling:
       Networking:
         SubnetIds:
           - subnet-01a3868361b728e2c
-
+      CustomActions:
+        OnNodeConfigured:
+          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
+          
 Region: us-east-2
 Image:
   Os: alinux2
