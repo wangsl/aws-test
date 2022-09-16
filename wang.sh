@@ -1,6 +1,7 @@
 
 
-u=${USER}
+#u=${USER}
+u=sw77
 ssh-keygen -t rsa -f /home/${u}/.ssh/id_rsa -q -P ""
 cd /home/${u}/.ssh
 cp -rp id_rsa.pub authorized_keys

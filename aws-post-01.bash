@@ -202,6 +202,19 @@ function setup_singularity()
   fi
 }
 
+function setup_node()
+{
+  if [[ "${cfn_node_type}" == "HeadNode" ]]; then
+    yum update -y
+    yum install -y xorg-x11-server-Xorg xorg-x11-xauth xorg-x11-apps xterm emacs nano
+    yum groupinstall -y "Development Tools"
+  fi
+
+	cat<<EOF > /etc/profile.d/tz.sh
+export TZ="America/New_York"
+EOF
+}
+
 touch /tmp/nyu-startup.log
 chmod 644 /tmp/nyu-startup.log
 
@@ -213,5 +226,7 @@ chmod 644 /tmp/nyu-startup.log
   bind_mount_share_apps
 
   setup_singularity
+
+  setup_node
 
 } >> /tmp/nyu-startup.log 2>&1
