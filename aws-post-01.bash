@@ -193,9 +193,13 @@ function bind_mount_share_apps()
 
 function setup_singularity()
 {
-  cd /tmp && \
-	wget https://github.com/sylabs/singularity/releases/download/v3.10.2/singularity-ce-3.10.2-1.el7.x86_64.rpm && \
-	yum localinstall -y singularity-ce-3.10.2-1.el7.x86_64.rpm 
+  # cd /tmp && \
+	# wget https://github.com/sylabs/singularity/releases/download/v3.10.2/singularity-ce-3.10.2-1.el7.x86_64.rpm && \
+	# yum localinstall -y singularity-ce-3.10.2-1.el7.x86_64.rpm 
+
+  if [ -e /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm ]; then
+    yum localinstall -y /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm
+  fi
 }
 
 touch /tmp/nyu-startup.log
@@ -205,10 +209,9 @@ chmod 600 /tmp/nyu-startup.log
   set -x
 
   create_user_accounts
+  
   bind_mount_share_apps
 
-  #mkdir -p /opt/singularity/mnt/{container,final,overlay,session}
-
-  #setup_singularity
+  setup_singularity
 
 } >> /tmp/nyu-startup.log 2>&1
