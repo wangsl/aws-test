@@ -21,9 +21,9 @@ HeadNode:
 Scheduling:
   Scheduler: slurm
   SlurmQueues:
-    - Name: compute
+    - Name: c5n18xlarge
       ComputeResources:
-        - Name: hpc6a
+        - Name: c5n18xlarge
           MinCount: 0
           MaxCount: 1000
           InstanceType: c5n.18xlarge
@@ -38,6 +38,23 @@ Scheduling:
       Iam:
         AdditionalIamPolicies:
           - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      CustomActions:
+        OnNodeConfigured:
+          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
+
+    - Name: p32xlarge
+      ComputeResources:
+        - Name: p32xlarge
+          MinCount: 0
+          MaxCount: 10
+          InstanceType: p3.2xlarge
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            VolumeType: gp3
+      Networking:
+        SubnetIds:
+          - subnet-01a3868361b728e2c
       CustomActions:
         OnNodeConfigured:
           Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash

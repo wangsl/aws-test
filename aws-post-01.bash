@@ -42,7 +42,7 @@ EOF
   fi
 
   /usr/sbin/groupadd -g 891200004 gaussian
-	/usr/sbin/usermod -a -G wang,gaussian wang
+  /usr/sbin/usermod -a -G wang,gaussian wang
   /usr/sbin/usermod -a -G sw77,gaussian sw77
 }
 
@@ -181,6 +181,13 @@ function mount_readonly_persistent_disks()
   done
 }
 
+function setup_singularity()
+{
+  cd /tmp && \
+	wget https://github.com/sylabs/singularity/releases/download/v3.10.2/singularity-ce-3.10.2-1.el7.x86_64.rpm && \
+	yum localinstall -y singularity-ce-3.10.2-1.el7.x86_64.rpm 
+}
+
 touch /tmp/nyu-startup.log
 chmod 600 /tmp/nyu-startup.log
 
@@ -191,8 +198,6 @@ chmod 600 /tmp/nyu-startup.log
 
   #mkdir -p /opt/singularity/mnt/{container,final,overlay,session}
 
-  cd /tmp && \
-	wget https://github.com/sylabs/singularity/releases/download/v3.10.2/singularity-ce-3.10.2-1.el7.x86_64.rpm && \
-	yum localinstall -y singularity-ce-3.10.2-1.el7.x86_64.rpm 
+  #setup_singularity
 
 } >> /tmp/nyu-startup.log 2>&1
