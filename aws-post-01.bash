@@ -203,13 +203,13 @@ function setup_singularity()
 }
 
 touch /tmp/nyu-startup.log
-chmod 600 /tmp/nyu-startup.log
+chmod 644 /tmp/nyu-startup.log
 
 {
   set -x
 
   create_user_accounts
-  
+
   bind_mount_share_apps
 
   setup_singularity
