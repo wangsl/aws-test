@@ -197,7 +197,7 @@ function setup_singularity()
 	# wget https://github.com/sylabs/singularity/releases/download/v3.10.2/singularity-ce-3.10.2-1.el7.x86_64.rpm && \
 	# yum localinstall -y singularity-ce-3.10.2-1.el7.x86_64.rpm 
 
-  if [ -e /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm ]; then
+  if [[ -e /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm ]]; then
     yum localinstall -y /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm
   fi
 }
@@ -208,11 +208,19 @@ function setup_node()
     yum update -y
     yum install -y xorg-x11-server-Xorg xorg-x11-xauth xorg-x11-apps xterm emacs nano
     yum groupinstall -y "Development Tools"
+    echo "X11Forwarding yes" >> /etc/ssh/sshd_config
+    systemctl restart sshd
   fi
 
 	cat<<EOF > /etc/profile.d/tz.sh
 export TZ="America/New_York"
 EOF
+
+# initialize GPU
+if [[ -e /dev/nvidia0 ]] && [[ -e /share/apps/local/bin/p2pBandwidthLatencyTest ]]; then
+  /share/apps/local/bin/p2pBandwidthLatencyTest
+fi
+
 }
 
 touch /tmp/nyu-startup.log
