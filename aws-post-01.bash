@@ -1,6 +1,8 @@
 
 if [[ -e /etc/parallelcluster/cfnconfig ]]; then
   source /etc/parallelcluster/cfnconfig 
+else
+  exit
 fi
 
 function create_user_accounts()
@@ -18,8 +20,8 @@ function create_user_accounts()
     local uID=${line[2]}
     local gID=${line[3]}
     local name=${line[4]}
-    /usr/sbin/groupadd -g $gID $netID
-    /usr/sbin/useradd $flag -g $gID -s /bin/bash -u $uID -c "$name" $netID
+    /usr/sbin/groupadd -g ${gID} ${netID}
+    /usr/sbin/useradd ${flag} -g ${gID} -s /bin/bash -u ${uID} -c "${name}" ${netID}
   done <<EOF
 sw77:x:1296493:1296493:Shenglong Wang:/home/sw77:/bin/bash
 wang:x:10015:10015:Shenglong Wang:/home/wang:/bin/bash
@@ -150,7 +152,7 @@ EOF
 
 function gpu_initialize()
 {
-  if [ ! -e /dev/nvidia0 ]; then return; fi
+  if [[ ! -e /dev/nvidia0 ]]; then return; fi
     
   for((i=0; i<12; i++)); do
     if [ -x /share/apps/local/bin/p2pBandwidthLatencyTest ]; then
@@ -193,10 +195,11 @@ function bind_mount_share_apps()
 
 function setup_singularity()
 {
-  # cd /tmp && \
-	# wget https://github.com/sylabs/singularity/releases/download/v3.10.2/singularity-ce-3.10.2-1.el7.x86_64.rpm && \
-	# yum localinstall -y singularity-ce-3.10.2-1.el7.x86_64.rpm 
-
+  if [[ ! -e /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm ]]; then
+    mkdir -p /share/apps/packages && cd /share/apps/packages
+    wget https://github.com/sylabs/singularity/releases/download/v3.10.2/singularity-ce-3.10.2-1.el7.x86_64.rpm 
+  fi
+  
   if [[ -e /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm ]]; then
     yum localinstall -y /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm
   fi
@@ -216,11 +219,10 @@ function setup_node()
 export TZ="America/New_York"
 EOF
 
-# initialize GPU
-if [[ -e /dev/nvidia0 ]] && [[ -e /share/apps/local/bin/p2pBandwidthLatencyTest ]]; then
-  /share/apps/local/bin/p2pBandwidthLatencyTest
-fi
-
+  # initialize GPU
+  if [[ -e /dev/nvidia0 ]] && [[ -e /share/apps/local/bin/p2pBandwidthLatencyTest ]]; then
+    /share/apps/local/bin/p2pBandwidthLatencyTest
+  fi
 }
 
 touch /tmp/nyu-startup.log
