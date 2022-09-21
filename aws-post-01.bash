@@ -85,7 +85,7 @@ EOF
 
 function monitor_gpu_utilizations()
 {
-  if [ ! -e /dev/nvidia0 ]; then return; fi
+  if [[ ! -e /dev/nvidia0 ]]; then return; fi
     
   cat<<EOF > /etc/systemd/system/gpu-utilizations.service
 [Unit]
