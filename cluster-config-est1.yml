@@ -1,14 +1,14 @@
 
-Region: us-east-2
+Region: us-east-1
 Image:
   Os: alinux2
-  
+
 HeadNode:
   InstanceType: c5a.2xlarge
   Ssh:
     KeyName: aws-us-est1
   Networking:
-    SubnetId: subnet-01a3868361b728e2c
+    SubnetId: subnet-0b4cb121b9aba89f1
   LocalStorage:
     RootVolume:
       Size: 500
@@ -26,7 +26,7 @@ HeadNode:
 Scheduling:
   Scheduler: slurm
   SlurmQueues:
-    - Name: c0
+    - Name: spot
       ComputeResources:
         - Name: c5n18xlarge
           MinCount: 0
@@ -35,23 +35,6 @@ Scheduling:
           Efa:
             Enabled: true
           DisableSimultaneousMultithreading: true
-      ComputeSettings:
-        LocalStorage:
-          RootVolume:
-            VolumeType: gp3
-      Networking:
-        SubnetIds:
-          - subnet-01a3868361b728e2c
-        PlacementGroup:
-          Enabled: true
-        AdditionalSecurityGroups:
-          - sg-04ec976b09177c580
-      CustomActions:
-        OnNodeConfigured:
-          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
-
-    - Name: c1
-      ComputeResources:
         - Name: c6i32xlarge
           MinCount: 0
           MaxCount: 100
@@ -59,23 +42,6 @@ Scheduling:
           Efa:
             Enabled: true
           DisableSimultaneousMultithreading: true
-      ComputeSettings:
-        LocalStorage:
-          RootVolume:
-            VolumeType: gp3
-      Networking:
-        SubnetIds:
-          - subnet-01a3868361b728e2c
-        PlacementGroup:
-          Enabled: true
-        AdditionalSecurityGroups:
-          - sg-04ec976b09177c580
-      CustomActions:
-        OnNodeConfigured:
-          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
-
-    - Name: g0
-      ComputeResources:
         - Name: p32xlarge
           MinCount: 0
           MaxCount: 10
@@ -87,12 +53,14 @@ Scheduling:
             VolumeType: gp3
       Networking:
         SubnetIds:
-          - subnet-01a3868361b728e2c
+          - subnet-subnet-0b4cb121b9aba89f1
+        PlacementGroup:
+          Enabled: true
+        AdditionalSecurityGroups:
+          - sg-04ec976b09177c580
       CustomActions:
         OnNodeConfigured:
           Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
-          
-
 
 SharedStorage:
   - Name: FsxLustre0
@@ -101,3 +69,5 @@ SharedStorage:
     FsxLustreSettings:
       StorageCapacity: 1200
       DeploymentType: SCRATCH_2
+
+      
