@@ -27,6 +27,7 @@ Scheduling:
   Scheduler: slurm
   SlurmQueues:
     - Name: c0
+      CapacityType: SPOT
       ComputeResources:
         - Name: c5n18xlarge
           MinCount: 0
@@ -35,23 +36,6 @@ Scheduling:
           Efa:
             Enabled: true
           DisableSimultaneousMultithreading: true
-      ComputeSettings:
-        LocalStorage:
-          RootVolume:
-            VolumeType: gp3
-      Networking:
-        SubnetIds:
-          - subnet-01a3868361b728e2c
-        PlacementGroup:
-          Enabled: true
-        AdditionalSecurityGroups:
-          - sg-04ec976b09177c580
-      CustomActions:
-        OnNodeConfigured:
-          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
-
-    - Name: c1
-      ComputeResources:
         - Name: c6i32xlarge
           MinCount: 0
           MaxCount: 100
@@ -59,6 +43,11 @@ Scheduling:
           Efa:
             Enabled: true
           DisableSimultaneousMultithreading: true
+        - Name: p32xlarge
+          MinCount: 0
+          MaxCount: 10
+          InstanceType: p3.2xlarge
+          DisableSimultaneousMultithreading: false
       ComputeSettings:
         LocalStorage:
           RootVolume:
@@ -92,8 +81,6 @@ Scheduling:
         OnNodeConfigured:
           Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
           
-
-
 SharedStorage:
   - Name: FsxLustre0
     StorageType: FsxLustre
