@@ -200,7 +200,7 @@ function setup_singularity()
     mkdir -p /share/apps/packages && cd /share/apps/packages
     wget https://github.com/sylabs/singularity/releases/download/v3.10.2/singularity-ce-3.10.2-1.el7.x86_64.rpm 
   fi
-  
+
   if [[ -e /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm ]]; then
     yum localinstall -y /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm
   fi
@@ -221,7 +221,12 @@ export TZ="America/New_York"
 EOF
 
   # initialize GPU
-  if [[ -e /dev/nvidia0 ]] && [[ -e /share/apps/local/bin/p2pBandwidthLatencyTest ]]; then
+  if [[ -e /dev/nvidia0 ]]; then
+    if [[ ! -e /share/apps/local/bin/p2pBandwidthLatencyTest ]]; then
+      wget -O /share/apps/local/bin/p2pBandwidthLatencyTest https://raw.githubusercontent.com/wangsl/aws-test/main/p2pBandwidthLatencyTest
+      chmod 755 /share/apps/local/bin/p2pBandwidthLatencyTest
+    fi    
+    if [[ -x /share/apps/local/bin/p2pBandwidthLatencyTest ]]; then
     /share/apps/local/bin/p2pBandwidthLatencyTest
     /usr/bin/nvidia-smi -pm 1
   fi
