@@ -157,6 +157,7 @@ function gpu_initialize()
   for((i=0; i<12; i++)); do
     if [ -x /share/apps/local/bin/p2pBandwidthLatencyTest ]; then
       /share/apps/local/bin/p2pBandwidthLatencyTest
+      /usr/bin/nvidia-smi -pm 1
       break
     else
       sleep 5

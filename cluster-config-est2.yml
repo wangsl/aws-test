@@ -26,7 +26,7 @@ HeadNode:
 Scheduling:
   Scheduler: slurm
   SlurmQueues:
-    - Name: c0
+    - Name: c5n18xlarge
       CapacityType: SPOT
       ComputeResources:
         - Name: c5n18xlarge
@@ -36,18 +36,6 @@ Scheduling:
           Efa:
             Enabled: true
           DisableSimultaneousMultithreading: true
-        - Name: c6i32xlarge
-          MinCount: 0
-          MaxCount: 100
-          InstanceType: c6i.32xlarge
-          Efa:
-            Enabled: true
-          DisableSimultaneousMultithreading: true
-        - Name: p32xlarge
-          MinCount: 0
-          MaxCount: 10
-          InstanceType: p3.2xlarge
-          DisableSimultaneousMultithreading: false
       ComputeSettings:
         LocalStorage:
           RootVolume:
@@ -55,6 +43,7 @@ Scheduling:
       Networking:
         SubnetIds:
           - subnet-01a3868361b728e2c
+        AssignPublicIp: true
         PlacementGroup:
           Enabled: true
         AdditionalSecurityGroups:
@@ -63,11 +52,38 @@ Scheduling:
         OnNodeConfigured:
           Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
 
-    - Name: g0
+    - Name: c6i32xlarge
+      CapacityType: SPOT
+      ComputeResources: 
+        - Name: c6i32xlarge
+          MinCount: 0
+          MaxCount: 1000
+          InstanceType: c6i.32xlarge
+          Efa:
+            Enabled: true
+          DisableSimultaneousMultithreading: true
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            VolumeType: gp3
+      Networking:
+        SubnetIds:
+          - subnet-01a3868361b728e2c
+        AssignPublicIp: false
+        PlacementGroup:
+          Enabled: true
+        AdditionalSecurityGroups:
+          - sg-04ec976b09177c580
+      CustomActions:
+        OnNodeConfigured:
+          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
+
+    - Name: p32xlarge
+      CapacityType: SPOT
       ComputeResources:
         - Name: p32xlarge
           MinCount: 0
-          MaxCount: 10
+          MaxCount: 100
           InstanceType: p3.2xlarge
           DisableSimultaneousMultithreading: false
       ComputeSettings:
@@ -77,6 +93,27 @@ Scheduling:
       Networking:
         SubnetIds:
           - subnet-01a3868361b728e2c
+        AssignPublicIp: true
+      CustomActions:
+        OnNodeConfigured:
+          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
+
+    - Name: p38xlarge
+      CapacityType: SPOT
+      ComputeResources:
+        - Name: p38xlarge
+          MinCount: 0
+          MaxCount: 100
+          InstanceType: p3.8xlarge
+          DisableSimultaneousMultithreading: false
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            VolumeType: gp3
+      Networking:
+        SubnetIds:
+          - subnet-01a3868361b728e2c
+        AssignPublicIp: true
       CustomActions:
         OnNodeConfigured:
           Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
