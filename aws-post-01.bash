@@ -223,12 +223,14 @@ EOF
   # initialize GPU
   if [[ -e /dev/nvidia0 ]]; then
     if [[ ! -e /share/apps/local/bin/p2pBandwidthLatencyTest ]]; then
+      mkdir -p /share/apps/local/bin
       wget -O /share/apps/local/bin/p2pBandwidthLatencyTest https://raw.githubusercontent.com/wangsl/aws-test/main/p2pBandwidthLatencyTest
       chmod 755 /share/apps/local/bin/p2pBandwidthLatencyTest
     fi    
     if [[ -x /share/apps/local/bin/p2pBandwidthLatencyTest ]]; then
-    /share/apps/local/bin/p2pBandwidthLatencyTest
-    /usr/bin/nvidia-smi -pm 1
+      /share/apps/local/bin/p2pBandwidthLatencyTest
+      /usr/bin/nvidia-smi -pm 1
+    fi
   fi
 }
 
