@@ -223,6 +223,7 @@ EOF
   # initialize GPU
   if [[ -e /dev/nvidia0 ]] && [[ -e /share/apps/local/bin/p2pBandwidthLatencyTest ]]; then
     /share/apps/local/bin/p2pBandwidthLatencyTest
+    /usr/bin/nvidia-smi -pm 1
   fi
 }
 
