@@ -85,8 +85,6 @@ Scheduling:
           MinCount: 0
           MaxCount: 1000
           InstanceType: c6a.large
-          Efa:
-            Enabled: true
           DisableSimultaneousMultithreading: false
       ComputeSettings:
         LocalStorage:
