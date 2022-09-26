@@ -83,7 +83,7 @@ Scheduling:
       ComputeResources: 
         - Name: c6alarge
           MinCount: 0
-          MaxCount: 1000
+          MaxCount: 5000
           InstanceType: c6a.large
           DisableSimultaneousMultithreading: false
       ComputeSettings:
