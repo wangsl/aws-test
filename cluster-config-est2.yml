@@ -69,7 +69,7 @@ Scheduling:
       Networking:
         SubnetIds:
           - subnet-01a3868361b728e2c
-        AssignPublicIp: false
+        AssignPublicIp: true
         PlacementGroup:
           Enabled: true
         AdditionalSecurityGroups:

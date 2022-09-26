@@ -240,6 +240,8 @@ chmod 644 /tmp/nyu-startup.log
 {
   set -x
 
+  env 
+
   create_user_accounts
 
   bind_mount_share_apps
