@@ -203,9 +203,10 @@ function setup_singularity()
   fi
 
   if [[ -e /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm ]]; then
-    yum localinstall -y /share/apps/packages/squashfs-tools-4.3-0.21.gitaae0aff4.amzn2.0.1.x86_64.rpm \
-    /share/apps/packages/runc-1.1.3-1.amzn2.x86_64.rpm \
-    /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm
+    yum localinstall -y \
+      /share/apps/packages/squashfs-tools-*.x86_64.rpm \
+      /share/apps/packages/runc-*.x86_64.rpm \
+      /share/apps/packages/singularity-ce-*.x86_64.rpm
   fi
 }
 
