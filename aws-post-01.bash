@@ -238,6 +238,16 @@ EOF
   fi
 }
 
+function set_sshd()
+{
+  if [[ "${cfn_node_type}" != "ComputeFleet" ]]; then return; fi
+  cat<<EOF >> /etc/ssh/sshd_config
+MaxSessions 1024
+MaxStartups 1024
+EOF
+  systemctl restart sshd
+}
+
 touch /tmp/nyu-startup.log
 chmod 644 /tmp/nyu-startup.log
 
@@ -245,6 +255,8 @@ chmod 644 /tmp/nyu-startup.log
   set -x
 
   env 
+
+  set_sshd
 
   create_user_accounts
 
