@@ -11,3 +11,7 @@ criterion=0.8
 if [[ $(echo "${load5} < ${criterion} && ${load10} < ${criterion} && ${load15} < ${criterion}" | /usr/bin/bc) -eq 1 ]]; then
   /usr/sbin/shutdown -h
 fi
+
+# Crontab every 5 mins
+# */5 * * * * bash ThiShellScript
+
