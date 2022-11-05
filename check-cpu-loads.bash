@@ -1,6 +1,8 @@
 #!/bin/bash
 
-tmp=($(/usr/bin/uptime | sed -e 's/,/ /g' | awk '{print $(NF-2) " " $(NF-1) " " $NF }'))
+#tmp=($(/usr/bin/uptime | sed -e 's/,/ /g' | awk '{print $(NF-2) " " $(NF-1) " " $NF }'))
+
+tmp=($(cat /proc/loadavg))
 
 load5=${tmp[0]}
 load10=${tmp[1]}
