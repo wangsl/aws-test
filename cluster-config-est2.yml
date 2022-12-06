@@ -163,11 +163,35 @@ Scheduling:
       CustomActions:
         OnNodeConfigured:
           Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
+
+    - Name: c518xlarge
+      CapacityType: ONDEMAND
+      ComputeResources:
+        - Name: c518xlarge
+          MinCount: 0
+          MaxCount: 1000
+          InstanceType: c5.18xlarge
+          DisableSimultaneousMultithreading: true
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            VolumeType: gp3
+      Networking:
+        SubnetIds:
+          - subnet-01a3868361b728e2c
+        AssignPublicIp: true
+        PlacementGroup:
+          Enabled: true
+        AdditionalSecurityGroups:
+          - sg-04ec976b09177c580
+      CustomActions:
+        OnNodeConfigured:
+          Script: https://raw.githubusercontent.com/wangsl/aws-test/main/aws-post-01.bash
           
 SharedStorage:
   - Name: FsxLustre0
     StorageType: FsxLustre
     MountDir: /scratch
     FsxLustreSettings:
-      StorageCapacity: 16800
+      StorageCapacity: 4800
       DeploymentType: SCRATCH_2
