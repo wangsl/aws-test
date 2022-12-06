@@ -16,7 +16,7 @@ chown -Rh ${u}:${u} /home/${u}/.ssh
 cat<<EOF >> /home/${u}/.bashrc
 
 ulimit -l unlimited
-ulimit -s unlimited
+#ulimit -s unlimited
 
 alias ll='ls -ltrsF --time-style=+"%b %d %Y %H:%M:%S"'
 alias ls='ls -xF'
