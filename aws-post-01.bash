@@ -1,9 +1,24 @@
 
-if [[ -e /etc/parallelcluster/cfnconfig ]]; then
-  source /etc/parallelcluster/cfnconfig 
-else
-  exit
-fi
+# if [[ -e /etc/parallelcluster/cfnconfig ]]; then
+#   source /etc/parallelcluster/cfnconfig 
+# else
+#   exit
+# fi
+
+cfn_node_type="$1"
+
+function check_cfn_node_type()
+{
+  if [[ "${cfn_node_type}" == "" ]]; then 
+    echo "No cfn_node_type defined"
+    exit 1
+  fi
+
+  if [[ "${cfn_node_type}" != "ComputeFleet" ]] && [[ "${cfn_node_type}" != "HeadNode" ]]; then
+    echo "Invalid cfn_node_type: ${cfn_node_type}"
+    exit 1
+  fi
+}
 
 function create_user_accounts()
 {
@@ -254,15 +269,17 @@ chmod 644 /tmp/nyu-startup.log
 {
   set -x
 
+  check_cfn_node_type
+
   env 
 
   set_sshd
 
   create_user_accounts
 
-  #bind_mount_share_apps
+  bind_mount_share_apps
 
-  #setup_singularity
+  setup_singularity
 
   setup_node
 
