@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # if [[ -e /etc/parallelcluster/cfnconfig ]]; then
 #   source /etc/parallelcluster/cfnconfig 
