@@ -260,9 +260,9 @@ chmod 644 /tmp/nyu-startup.log
 
   create_user_accounts
 
-  bind_mount_share_apps
+  #bind_mount_share_apps
 
-  setup_singularity
+  #setup_singularity
 
   setup_node
 
