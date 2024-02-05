@@ -212,16 +212,14 @@ function bind_mount_share_apps()
 
 function setup_singularity()
 {
-  if [[ ! -e /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm ]]; then
+  if [[ ! -e /share/apps/packages/singularity-ce-4.1.1-1.el7.x86_64.rpm ]]; then
     mkdir -p /share/apps/packages && cd /share/apps/packages
-    wget https://github.com/sylabs/singularity/releases/download/v3.10.2/singularity-ce-3.10.2-1.el7.x86_64.rpm 
-    yum install --downloadonly --downloaddir=$(pwd) runc squashfs-tools
+    wget https://github.com/sylabs/singularity/releases/download/v4.1.1/singularity-ce-4.1.1-1.el7.x86_64.rpm
+    #yum install -y --downloadonly --downloaddir=$(pwd) squashfs-tools fuse fuse-common fuse3 fuse3-libs
   fi
 
-  if [[ -e /share/apps/packages/singularity-ce-3.10.2-1.el7.x86_64.rpm ]]; then
+  if [[ -e /share/apps/packages/singularity-ce-4.1.1-1.el7.x86_64.rpm ]]; then
     yum localinstall -y \
-      /share/apps/packages/squashfs-tools-*.x86_64.rpm \
-      /share/apps/packages/runc-*.x86_64.rpm \
       /share/apps/packages/singularity-ce-*.x86_64.rpm
   fi
 }
