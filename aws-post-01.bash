@@ -270,13 +270,12 @@ chmod 644 /tmp/nyu-startup.log
 
   check_cfn_node_type
 
-  env 
-
   set_sshd
 
   create_user_accounts
 
   bind_mount_share_apps
+  setup_ram_disk
 
   setup_singularity
 
