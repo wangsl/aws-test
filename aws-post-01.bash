@@ -281,4 +281,6 @@ chmod 644 /tmp/nyu-startup.log
 
   setup_node
 
+  mkdir -p /mnt/wang && mount 10.135.97.166:/vast/projects/wang /mnt/wang
+
 } >> /tmp/nyu-startup.log 2>&1
